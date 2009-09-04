@@ -1,0 +1,9 @@
+# Russian strings go here
+btn_start:  Пуск
+btn_stop:   Стоп
+btn_start_working:   Начать работу над заданием
+your_effort:  Ваше время, затраченное на задания
+no_assigned_issues:   Для вас не назначено ни одного задания
+timer_round_interval: Интервал округления таймера
+minutes: минут
+error_already_working: Вы уже работаете над другим заданием

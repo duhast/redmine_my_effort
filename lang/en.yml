@@ -1,0 +1,9 @@
+# English strings go here
+btn_start:  Start
+btn_stop:   Stop
+btn_start_working:   Start working on this issue
+your_effort:  Your time effort to issues
+no_assigned_issues:   You have no assigned issues
+timer_round_interval: Timer tick interval
+minutes: minutes
+error_already_working: You are already working in another task

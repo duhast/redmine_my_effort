@@ -1,0 +1,73 @@
+<style type="text/css">
+  .timer_btn {
+    color: #000000;
+    background-color: #CCCCCC;
+    text-decoration: none;
+    border-top-style: inset;
+    border-right-style: inset;
+    border-bottom-style: inset;
+    border-left-style: inset;
+    border-top-width: thin;
+    border-right-width: thin;
+    border-bottom-width: thin;
+    border-left-width: thin;
+    padding-top: 1px;
+    padding-right: 10px;
+    padding-bottom: 1px;
+    padding-left: 10px;
+  }
+  .timer_btn:hover {
+    color: #FFFFFF;
+    background-color: #333333;
+  }
+  .active_timer {
+      font-weight: bold;
+  }
+</style>
+<h2><%= l(:your_effort) %></h2>
+<%= l(:no_assigned_issues) if @issues.size==0 %>
+<% last_proj = -1 %>
+<table width="75%">
+  <% @issues.each do |issue| %>
+    <% if last_proj != issue.project_id %>
+      <% last_proj = issue.project_id %>
+      <tr colspan="3"><td><h3><%= @issued_projects[last_proj].to_s %></h3></td></tr>
+    <% end %>
+    <tr id="<%= issue.id %>">
+      <td width="60%">
+        <%= link_to issue.to_s, {:controller => "issues", :action => "show", :id => issue.id} %>
+      </td>
+      <td align="right">
+        <%=  @hours_stock[issue.id] %>
+        <%  if !@active_effort.nil? and @active_effort.issue_id==issue.id %>
+          +<span id="active-timer" class="active_timer"><%= number_with_precision(@active_effort.hours_spent, 2) %></span>
+        <%  end %>
+      </td>
+      <td align="left">
+        <% if @active_effort.nil?  %>
+            <%= link_to l(:btn_start), {:controller => "user_efforts", :action => "new", :issue_id => issue.id}, :class => "timer_btn" %>
+         <% else %>
+            <% if @active_effort.issue_id==issue.id %>
+              <%= link_to l(:btn_stop), {:controller => "user_efforts", :action => "stop"}, :class=>"timer_btn" %>
+            <% end %>
+         <% end %>
+      </td>
+    </tr>
+  <% end  %>
+</table>
+
+
+<% unless @active_effort.nil? %>
+<script language="JavaScript">
+  var added_val = <%= @active_effort.hours_spent %>;
+
+  function efforttimer()
+  {
+    added_val += 1/60;
+    document.getElementById("active-timer").innerHTML = added_val.toFixed(1);
+    setTimeout("efforttimer()", 60000);
+  }
+
+  setTimeout("efforttimer()", 60000);
+</script>
+<% end %>

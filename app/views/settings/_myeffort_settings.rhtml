@@ -1,0 +1,5 @@
+<p>
+  <label><%= l(:timer_round_interval)  %> :</label>
+  <%= text_field_tag 'settings[tick_interval]', Setting.plugin_redmine_my_effort['tick_interval'], {:size => 10} %>
+  (<%= l(:minutes) %>)
+</p>
